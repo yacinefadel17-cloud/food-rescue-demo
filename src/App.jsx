@@ -287,7 +287,7 @@ function HomePage({ donations, goTo }) {
 }
 
 /* ==========================================
-   4. DONATIONS PAGE
+   4. DONATIONS PAGE (تمت إضافة خريطة GPS)
 ========================================== */
 function DonationsPage({
   user,
@@ -358,6 +358,34 @@ function DonationsPage({
                     <p>📍 <strong>الموقع:</strong> {item.location}</p>
                     <p>📞 <strong>الهاتف:</strong> {item.phone}</p>
                   </div>
+
+                  {/* زر عرض الموقع الخريطة عبر GPS */}
+                  {item.coords && item.coords.latitude && (
+                    <div style={{ marginTop: "10px" }}>
+                      <a
+                        href={`https://www.google.com/maps?q=${item.coords.latitude},${item.coords.longitude}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="map-link-btn"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          color: "#16a34a",
+                          textDecoration: "none",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                          backgroundColor: "#f0fdf4",
+                          padding: "6px 10px",
+                          borderRadius: "6px",
+                          border: "1px solid #bbf7d0",
+                        }}
+                      >
+                        🗺️ فتح الموقع على الخريطة (GPS)
+                      </a>
+                    </div>
+                  )}
+
                   <div className="donor">المتبرع: {item.donorEmail || "غير معروف"}</div>
 
                   <div className="donation-card-actions">
@@ -367,7 +395,6 @@ function DonationsPage({
                       </a>
                     )}
 
-                    {/* زر تعديل الحالة يظهر حصرياً لصاحب التبرع الأصلي */}
                     {isOwner ? (
                       <button
                         className={`claim-btn ${isClaimed ? "btn-claim" : "btn-cancel"}`}
@@ -407,6 +434,18 @@ function AuthPage({
   authLoading,
   handleAuth,
 }) {
+  useEffect(() => {
+    setEmail("");
+    setPassword("");
+    setAuthError("");
+  }, [isRegistering, setEmail, setPassword, setAuthError]);
+
+  const handleSubmitOnEnter = (e) => {
+    if (e.key === "Enter") {
+      handleAuth(e);
+    }
+  };
+
   return (
     <main className="auth-page">
       <div className="auth-side">
@@ -429,39 +468,47 @@ function AuthPage({
               : "سجل دخولك لإدارة حسابك وتفاعلاتك."}
           </p>
 
-          <form onSubmit={handleAuth}>
+          <div className="custom-auth-wrapper" onKeyDown={handleSubmitOnEnter}>
             <label>
               البريد الإلكتروني
               <input
-                type="email"
+                type="text"
+                name="user_identifier_x9"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="example@email.com"
-                required
+                autoComplete="off"
               />
             </label>
 
             <label>
               كلمة المرور
               <input
-                type="password"
+                type="text"
+                name="user_secret_k2"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                required
+                autoComplete="off"
+                style={{ WebkitTextSecurity: "disc" }}
               />
             </label>
 
             {authError && <div className="error">{authError}</div>}
 
-            <button className="btn btn-primary full" disabled={authLoading}>
+            <button
+              type="button"
+              className="btn btn-primary full"
+              onClick={handleAuth}
+              disabled={authLoading}
+            >
               {authLoading
                 ? "جاري المعالجة..."
                 : isRegistering
                 ? "إنشاء الحساب"
                 : "تسجيل الدخول"}
             </button>
-          </form>
+          </div>
 
           <button
             className="switch-auth"
@@ -483,7 +530,7 @@ function AuthPage({
 }
 
 /* ==========================================
-   6. DASHBOARD PAGE
+   6. DASHBOARD PAGE (إضافة تحديد الموقع الجغرافي)
 ========================================== */
 function DashboardPage({
   user,
@@ -496,6 +543,10 @@ function DashboardPage({
   setLocation,
   phone,
   setPhone,
+  coords,
+  setCoords,
+  isGettingLocation,
+  handleGetLocation,
   handleSubmitDonation,
   handleDeleteDonation,
   donations,
@@ -548,7 +599,7 @@ function DashboardPage({
               </label>
 
               <label>
-                الموقع
+                الموقع (اسم الحي / البلدية)
                 <input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -556,6 +607,32 @@ function DashboardPage({
                   required
                 />
               </label>
+
+              {/* زر تحديد الإحداثيات الدقيقة عبر GPS */}
+              <div style={{ marginBottom: "15px" }}>
+                <button
+                  type="button"
+                  onClick={handleGetLocation}
+                  disabled={isGettingLocation}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    backgroundColor: coords ? "#e0f2fe" : "#f3f4f6",
+                    color: coords ? "#0369a1" : "#374151",
+                    border: "1px dashed " + (coords ? "#0284c7" : "#d1d5db"),
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                  }}
+                >
+                  {isGettingLocation
+                    ? "⏳ جاري تحديد موقعك الجغرافي..."
+                    : coords
+                    ? "✅ تم تحديد موقع الـ GPS بنجاح!"
+                    : "📍 انقر لتحديد موقعك الحالي على الخريطة (اختياري)"}
+                </button>
+              </div>
 
               <label>
                 رقم الهاتف
@@ -591,7 +668,7 @@ function DashboardPage({
                       style={{
                         marginBottom: "8px",
                         display: "flex",
-                        justify: "space-between",
+                        justifyContent: "space-between",
                         alignItems: "center",
                       }}
                     >
@@ -639,6 +716,10 @@ export default function App() {
   const [quantity, setQuantity] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
+  
+  // حالة الـ GPS الجديدة
+  const [coords, setCoords] = useState(null);
+  const [isGettingLocation, setIsGettingLocation] = useState(false);
 
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -727,7 +808,31 @@ export default function App() {
     }
   };
 
-  // دالة تغيير الحالة: محمية بحشر التعديل لصاحب التبرع حصراً
+  // دالة التقاط موقع المتبرع الجغرافي عبر GPS
+  const handleGetLocation = () => {
+    if (!navigator.geolocation) {
+      alert("متصفحك لا يدعم خاصية تحديد الموقع (Geolocation).");
+      return;
+    }
+
+    setIsGettingLocation(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCoords({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        setIsGettingLocation(false);
+      },
+      (error) => {
+        console.error("خطأ في تحديد الموقع:", error);
+        alert("تعذر الوصول إلى موقعك. يرجى السماح للمتصفح بالوصول للـ GPS.");
+        setIsGettingLocation(false);
+      }
+    );
+  };
+
   const handleToggleClaim = async (item) => {
     if (!user) {
       alert("يرجى تسجيل الدخول أولاً.");
@@ -770,7 +875,9 @@ export default function App() {
   };
 
   const handleAuth = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
 
     setAuthError("");
     setAuthLoading(true);
@@ -815,6 +922,7 @@ export default function App() {
         quantity,
         location,
         phone: phone || "غير متوفر",
+        coords: coords || null, // حفظ خطوط الطول والعرض
         donorEmail: user?.email,
         status: "available",
         createdAt: serverTimestamp(),
@@ -824,6 +932,7 @@ export default function App() {
       setQuantity("");
       setLocation("");
       setPhone("");
+      setCoords(null);
 
       alert("تم نشر التبرع بنجاح 🌱");
 
@@ -886,6 +995,10 @@ export default function App() {
           setLocation={setLocation}
           phone={phone}
           setPhone={setPhone}
+          coords={coords}
+          setCoords={setCoords}
+          isGettingLocation={isGettingLocation}
+          handleGetLocation={handleGetLocation}
           handleSubmitDonation={handleSubmitDonation}
           handleDeleteDonation={handleDeleteDonation}
           donations={donations}
