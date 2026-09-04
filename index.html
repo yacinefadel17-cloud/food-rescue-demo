@@ -44,7 +44,18 @@
 	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
 	createChat({
-		webhookUrl: 'https://yacinefadel.app.n8n.cloud/webhook/59a5c61a-52b7-4931-8b2a-2e0a56ee953a/chat'
+		webhookUrl: 'https://yacinefadel.app.n8n.cloud/webhook/59a5c61a-52b7-4931-8b2a-2e0a56ee953a/chat',
+		i18n: {
+			en: {
+				title: 'مرحباً بك! 👋',
+				subtitle: 'ابدأ المحادثة، نحن هنا لمساعدتك في التبرعات 24/7',
+				inputPlaceholder: 'اكتب سؤالك هنا...',
+			},
+		},
+		initialMessages: [
+			'أهلاً بك في منصة الحد من الهدر الغذائي! 🌾',
+			'كيف يمكنني مساعدتك اليوم في التبرع أو البحث عن التبرعات؟'
+		],
 	});
 </script>
 
