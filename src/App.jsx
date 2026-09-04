@@ -87,7 +87,7 @@ function Navbar({ page, goTo, scrollToSection, user, handleLogout }) {
             </>
           ) : (
             <button className="btn btn-primary" onClick={() => goTo("auth")}>
-              دخول / تسجيل
+              تسجيل الدخول
             </button>
           )}
         </div>
@@ -287,7 +287,7 @@ function HomePage({ donations, goTo }) {
 }
 
 /* ==========================================
-   4. DONATIONS PAGE (تمت إضافة خريطة GPS)
+   4. DONATIONS PAGE
 ========================================== */
 function DonationsPage({
   user,
@@ -359,7 +359,6 @@ function DonationsPage({
                     <p>📞 <strong>الهاتف:</strong> {item.phone}</p>
                   </div>
 
-                  {/* زر عرض الموقع الخريطة عبر GPS */}
                   {item.coords && item.coords.latitude && (
                     <div style={{ marginTop: "10px" }}>
                       <a
@@ -530,7 +529,7 @@ function AuthPage({
 }
 
 /* ==========================================
-   6. DASHBOARD PAGE (إضافة تحديد الموقع الجغرافي)
+   6. DASHBOARD PAGE
 ========================================== */
 function DashboardPage({
   user,
@@ -608,7 +607,6 @@ function DashboardPage({
                 />
               </label>
 
-              {/* زر تحديد الإحداثيات الدقيقة عبر GPS */}
               <div style={{ marginBottom: "15px" }}>
                 <button
                   type="button"
@@ -716,8 +714,7 @@ export default function App() {
   const [quantity, setQuantity] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
-  
-  // حالة الـ GPS الجديدة
+
   const [coords, setCoords] = useState(null);
   const [isGettingLocation, setIsGettingLocation] = useState(false);
 
@@ -808,7 +805,6 @@ export default function App() {
     }
   };
 
-  // دالة التقاط موقع المتبرع الجغرافي عبر GPS
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
       alert("متصفحك لا يدعم خاصية تحديد الموقع (Geolocation).");
@@ -922,7 +918,7 @@ export default function App() {
         quantity,
         location,
         phone: phone || "غير متوفر",
-        coords: coords || null, // حفظ خطوط الطول والعرض
+        coords: coords || null,
         donorEmail: user?.email,
         status: "available",
         createdAt: serverTimestamp(),
