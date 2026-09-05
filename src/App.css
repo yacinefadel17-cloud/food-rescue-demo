@@ -723,74 +723,104 @@ body {
     gap: 20px;
   }
 /* ==========================================
-   11. N8N CHATBOT STYLES (مساعد إطعام الذكي)
+   تنسيق الشات العصري (أسلوب ChatGPT / Gemini)
 ========================================== */
-:root {
-  --n8n-chat-primary-color: #16a34a;
-  --n8n-chat-bg-color: #ffffff;
-  --n8n-chat-border-radius: 16px;
-}
-
-/* ضبط الاتجاه والخط ليتوافق مع باقي الموقع */
 .n8n-chat-widget {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
   direction: rtl !important;
 }
 
-/* تنسيق الهيدر بنفس الهوية البصرية */
+/* تكبير النافذة وجعلها عصرية */
+.n8n-chat-widget .n8n-chat-window {
+  width: 420px !important;
+  height: 600px !important;
+  border-radius: 20px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+  background-color: #ffffff !important;
+  overflow: hidden !important;
+}
+
+/* هيدر حديث وناعم */
 .n8n-chat-header {
-  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
-  border-top-left-radius: 16px !important;
-  border-top-right-radius: 16px !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  padding: 16px 20px !important;
+}
+
+.n8n-chat-header-title {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+
+.n8n-chat-header-subtitle {
+  color: #64748b !important;
+  font-size: 12px !important;
+}
+
+/* منطقة المحادثة والخلفية */
+.n8n-chat-body {
+  background-color: #f8fafc !important;
   padding: 16px !important;
 }
 
-/* رسائل البوت */
+/* فقاعات الرسائل بأسلوب عصري */
 .n8n-chat-message-bot {
-  background-color: #f1f5f9 !important;
-  color: #0f172a !important;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
   border: 1px solid #e2e8f0 !important;
-  border-radius: 12px !important;
+  border-radius: 16px 16px 16px 4px !important;
+  padding: 12px 16px !important;
   font-size: 14px !important;
-  line-height: 1.6 !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
-/* رسائل المستخدم */
 .n8n-chat-message-user {
   background-color: #16a34a !important;
   color: #ffffff !important;
-  border-radius: 12px !important;
+  border-radius: 16px 16px 4px 16px !important;
+  padding: 12px 16px !important;
   font-size: 14px !important;
 }
 
-/* مربع حوار الإدخال */
+/* مربع المدخلات (Prompt Box) مثل ChatGPT */
+.n8n-chat-input-container {
+  padding: 12px 16px !important;
+  background-color: #ffffff !important;
+  border-top: 1px solid #f1f5f9 !important;
+}
+
 .n8n-chat-input {
-  border-radius: 8px !important;
+  background-color: #f8fafc !important;
   border: 1px solid #cbd5e1 !important;
-  padding: 10px 14px !important;
+  border-radius: 24px !important;
+  padding: 12px 18px !important;
   font-size: 14px !important;
-  direction: rtl !important;
+  color: #0f172a !important;
+  transition: all 0.2s ease !important;
 }
 
 .n8n-chat-input:focus {
+  background-color: #ffffff !important;
   border-color: #16a34a !important;
-  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15) !important;
 }
 
-/* الزر العائم للشات (الفقاعة) */
+/* زر الإرسال والزر العائم */
+.n8n-chat-send-button,
 .n8n-chat-toggle-button {
-  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35) !important;
-  border: none !important;
+  background-color: #16a34a !important;
+  border-radius: 50% !important;
+  transition: transform 0.2s ease !important;
 }
 
-/* تعديل موقع الشات في الموبايل حتى لا يغطي على باقي الأزرار */
-@media (max-width: 768px) {
-  .n8n-chat-widget {
-    bottom: 16px !important;
-    left: 16px !important; /* رفعه قليلاً وتثبيته بوضوح */
-  }
+.n8n-chat-toggle-button:hover {
+  transform: scale(1.05) !important;
 }
+
+
 
 
 
