@@ -2,7 +2,6 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <!-- أيقونة التبويب (Favicon) - شعار إطعام 🌱 -->
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>"
@@ -10,28 +9,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>إطعام منصة لمحاربة التبذير</title>
 
-    <!-- استدعاء خط Cairo الممتاز للواجهات العربية -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
-    <!-- تنسيقات الخلفية الفاتحة والنظيفة -->
+    <!-- حقن تنسيقات متقدمة تتجاوز الـ Shadow DOM -->
     <style>
-      * {
-        box-sizing: border-box;
+      /* تعديل ألوان وحجم واجهة n8n عبر المتغيرات البرمجية الخاصة به */
+      :root {
+        --chat--color-primary: #16a34a !important;
+        --chat--color-primary-shade-50: #15803d !important;
+        --chat--color-white: #ffffff !important;
+        --chat--color-light: #f8fafc !important;
+        --chat--color-dark: #0f172a !important;
+        --chat--border-radius: 20px !important;
+        --chat--window--width: 420px !important;
+        --chat--window--height: 620px !important;
+        --chat--header--background: #ffffff !important;
+        --chat--header--color: #0f172a !important;
       }
-      body {
-        background-color: #f4f7f5; /* خلفية فاتحة بنغمة بيئية هادئة */
-        color: #1e293b; /* لون نصوص داكن ومريح للعين */
-        font-family: 'Cairo', system-ui, -apple-system, sans-serif;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-      }
-      #root {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+
+      /* جعل مربع الإدخال والرسائل تبدو مثل ChatGPT / Gemini */
+      n8n-chat, .n8n-chat {
+        font-family: system-ui, -apple-system, sans-serif !important;
+        direction: rtl !important;
       }
     </style>
   </head>
@@ -39,33 +38,29 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-<script type="module">
-	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    <script type="module">
+      import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-	createChat({
-		webhookUrl: 'https://yacinefadel.app.n8n.cloud/webhook/59a5c61a-52b7-4931-8b2a-2e0a56ee953a/chat',
-		i18n: {
-			en: {
-				title: 'مرحباً بك! 👋',
-				subtitle: 'ابدأ المحادثة، نحن هنا لمساعدتك في التبرعات 24/7',
-				inputPlaceholder: 'اكتب سؤالك هنا...',
-			},
-		},
-		initialMessages: [
-			'أهلاً بك في منصة الحد من الهدر الغذائي! 🌾',
-			'كيف يمكنني مساعدتك اليوم في التبرع أو البحث عن التبرعات؟'
-		],
-	});
-</script>
-
-
-
-
-
-
-
-
-    
+      createChat({
+        webhookUrl: 'https://yacinefadel.app.n8n.cloud/webhook/59a5c61a-52b7-4931-8b2a-2e0a56ee953a/chat',
+        target: '#root',
+        mode: 'window',
+        i18n: {
+          en: {
+            title: 'مساعد إطعام الذكي 🌿',
+            subtitle: 'نحن هنا لمساعدتك في التبرع أو الوصول إلى المساعدات',
+            inputPlaceholder: 'اسأل عن أي شيء...',
+          },
+        },
+        initialMessages: [
+          'أهلاً بك في منصة إطعام للحد من الهدر الغذائي! 🌾',
+          'كيف يمكنني مساعدتك اليوم؟'
+        ],
+        // تخصيص الشكل العصري مباشرة من الإعدادات
+        style: {
+          primaryColor: '#16a34a',
+        }
+      });
+    </script>
   </body>
 </html>
