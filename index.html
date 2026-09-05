@@ -39,28 +39,22 @@
     <script type="module" src="/src/main.jsx"></script>
 
     <script type="module">
-      import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-      createChat({
-        webhookUrl: 'https://yacinefadel.app.n8n.cloud/webhook/59a5c61a-52b7-4931-8b2a-2e0a56ee953a/chat',
-        target: '#root',
-        mode: 'window',
-        i18n: {
-          en: {
-            title: 'مساعد إطعام الذكي 🌿',
-            subtitle: 'نحن هنا لمساعدتك في التبرع أو الوصول إلى المساعدات',
-            inputPlaceholder: 'اسأل عن أي شيء...',
-          },
-        },
-        initialMessages: [
-          'أهلاً بك في منصة إطعام للحد من الهدر الغذائي! 🌾',
-          'كيف يمكنني مساعدتك اليوم؟'
-        ],
-        // تخصيص الشكل العصري مباشرة من الإعدادات
-        style: {
-          primaryColor: '#16a34a',
-        }
-      });
-    </script>
+  createChat({
+    webhookUrl: 'https://yacinefadel.app.n8n.cloud/webhook/59a5c61a-52b7-4931-8b2a-2e0a56ee953a/chat',
+    i18n: {
+      en: {
+        title: 'مساعد إطعام الذكي 🌿',
+        subtitle: 'نحن هنا لمساعدتك في التبرع أو الوصول إلى المساعدات',
+        inputPlaceholder: 'اكتب سؤالك هنا...',
+      },
+    },
+    initialMessages: [
+      'أهلاً بك في منصة إطعام للحد من الهدر الغذائي! 🌾',
+      'كيف يمكنني مساعدتك اليوم؟'
+    ],
+  });
+</script>
   </body>
 </html>
